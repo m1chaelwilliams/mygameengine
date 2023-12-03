@@ -17,6 +17,10 @@ m_active_scene(nullptr)
 }
 
 IApp::~IApp() {
+    LOG("DEALLOCATING APPLICATION");
+
+    m_content_manager.dealloc_all();
+
     if (icon) {
         SDL_FreeSurface(icon);
     }
@@ -24,6 +28,11 @@ IApp::~IApp() {
     SDL_DestroyRenderer(m_renderer_ptr);
     SDL_DestroyWindow(m_window_ptr);
     SDL_Quit();
+
+    IMG_Quit();
+    TTF_Quit();
+    Mix_Quit();
+    LOG("FINISHED QUITTING ALL DEPENDENCIES OF APPLICATION");
 }
 
 bool IApp::init() {
@@ -35,7 +44,15 @@ bool IApp::init() {
         return false;
     }
 
-    if (TTF_Init()) {
+    if (TTF_Init() < 0) {
+        return false;
+    }
+
+    if (Mix_Init(MIX_INIT_MP3) < 0) {
+        return false;
+    }
+
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         return false;
     }
     return true;

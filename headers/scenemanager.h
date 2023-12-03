@@ -25,11 +25,28 @@ namespace myengine {
             // modifying scene store
             void add_scene(int scene_id, IScene* scene_ptr);
             bool has_scene(int scene_id);
-            void remove_scene(int scene_id);
+            void remove_scene(
+                int scene_id, 
+                int num_args, 
+                const char* args[]);
 
             // modifying scene stack
-            void push_scene(int scene_id); // adds scene to top of stack
-            IScene* pop_scene(); // pops scene node from top of stack
+            void push_scene_raw(int scene_id); // pushes scene without calling any scene methods, used for building a scene stack
+            void swap_active_scene(
+                int scene_id, 
+                int num_exit_args = 0,
+                const char* exit_args[] = nullptr,
+                int num_enter_args = 0,
+                const char* enter_args[] = nullptr);
+            void push_scene(
+                int scene_id, 
+                int num_args = 0, 
+                const char* args[] = nullptr); // adds scene to top of stack
+            IScene* pop_scene(
+                int num_exit_args = 0, 
+                const char* exit_args[] = nullptr, 
+                int num_args = 0, 
+                const char* args[] = nullptr); // pops scene node from top of stack
             IScene* get_active_scene() const; // returns scene at top of stack
             bool scene_stack_is_empty() const;
             void clear_stack();

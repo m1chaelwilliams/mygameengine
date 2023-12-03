@@ -11,8 +11,8 @@ namespace myengine {
             virtual void on_unload() = 0;
             virtual void on_update() = 0;
             virtual void on_draw() = 0;
-            virtual void on_scene_enter() = 0;
-            virtual void on_scene_exit() = 0;
+            virtual void on_scene_enter(int num_args, const char* args[]) = 0;
+            virtual void on_scene_exit(int num_args, const char* args[]) = 0;
     };
 };
 

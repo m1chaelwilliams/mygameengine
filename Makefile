@@ -8,7 +8,7 @@ INCLUDE_DIRS = -Iinclude -Iheaders
 
 # static lib directory and static libs used respectively
 LIB_DIRS = -Llib
-LIBS = -lmingw32 -lSDL2Main -lSDL2 -lSDL2_image -lSDL2_ttf
+LIBS = -lmingw32 -lSDL2Main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 # source file(s)
 SRC = $(wildcard src/*.cpp) testprogram/main.cpp # for testing
