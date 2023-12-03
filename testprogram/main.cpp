@@ -14,7 +14,13 @@ class ColoredScene : public myengine::IScene {
             m_scene_color = clear_color;
         }
 
-        void on_load() override {}
+        void on_load() override {
+            test_texture = m_app_ptr->get_content_manager()->load_texture_from_file(m_app_ptr->get_renderer_ptr(), "assets/logo.png");
+            m_font_ptr = m_app_ptr->get_content_manager()->load_font_from_file("assets/fira.ttf", 20);
+
+            SDL_Surface* text_surf = TTF_RenderText_Solid(m_font_ptr, "Hello, World!", SDL_Color{255,255,255,255});
+            text_texture = m_app_ptr->get_content_manager()->load_texture_from_surface(m_app_ptr->get_renderer_ptr(), text_surf);
+        }
         void on_unload() override {}
         void on_update() override {}
         void on_draw() override {
@@ -26,12 +32,22 @@ class ColoredScene : public myengine::IScene {
                 m_scene_color.a
                 );
             SDL_RenderClear(m_app_ptr->get_renderer_ptr());
+
+            SDL_Rect drect = test_texture.get_rect(10, 10);
+            SDL_RenderCopy(m_app_ptr->get_renderer_ptr(), test_texture.data, nullptr, &drect);
+        
+            SDL_Rect tdrect = text_texture.get_rect(100,100);
+            SDL_RenderCopy(m_app_ptr->get_renderer_ptr(), text_texture.data, nullptr, &tdrect);
         }
         void on_scene_enter() override {}
         void on_scene_exit() override {}
     private:
         SDL_Color m_scene_color;
         myengine::IApp* m_app_ptr;
+        myengine::Texture test_texture;
+        myengine::Texture text_texture;
+        TTF_Font* m_font_ptr;
+        
 };
 
 class GameApp : public myengine::IApp {

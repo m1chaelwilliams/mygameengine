@@ -30,6 +30,14 @@ bool IApp::init() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         return false;
     }
+
+    if (IMG_Init(IMG_INIT_PNG) < 0) {
+        return false;
+    }
+
+    if (TTF_Init()) {
+        return false;
+    }
     return true;
 }
 bool IApp::create_display() {
@@ -123,4 +131,12 @@ SDL_Window* IApp::get_window_ptr() const {
 
 SDL_Renderer* IApp::get_renderer_ptr() const {
     return m_renderer_ptr;
+}
+
+ContentManager* IApp::get_content_manager() {
+    return &m_content_manager;
+}
+
+SceneManager* IApp::get_scene_manager() {
+    return &m_scene_manager;
 }

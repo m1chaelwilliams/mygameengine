@@ -8,6 +8,7 @@
 // internal dependencies
 #include "scenemanager.h"
 #include "eventhandler.h"
+#include "contentmanager.h"
 
 namespace myengine {
     struct GameWindowSettings {
@@ -66,9 +67,13 @@ namespace myengine {
 
             // utils
             bool load_icon();
+
+            // getters
             SDL_Point get_size() const;
             SDL_Window* get_window_ptr() const;
             SDL_Renderer* get_renderer_ptr() const;
+            ContentManager* get_content_manager();
+            SceneManager* get_scene_manager();
 
         protected:
             virtual void on_update() = 0;
@@ -82,6 +87,8 @@ namespace myengine {
             // managers (could be moved in the future)
             SceneManager m_scene_manager;
             EventHandler m_event_handler;
+            ContentManager m_content_manager;
+
             IScene* m_active_scene;
         
         private:
